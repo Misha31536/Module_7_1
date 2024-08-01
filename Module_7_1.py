@@ -1,4 +1,5 @@
 from pprint import pprint
+import os.path
 
 class Product:
 
@@ -20,11 +21,18 @@ class Shop:
     # и возвращает единую строку со всеми товарами из файла __file_name.
     def get_products(self):
 
-        self.__file_name = "Module_7_1.txt"
-        file = open(self.__file_name, 'r')
-        inShop = file.read()
-        file.close()
-        return inShop
+        if os.path.isfile('Module_7_1.txt'):
+            self.__file_name = "Module_7_1.txt"
+            file = open(self.__file_name, 'r')
+            inShop = file.read()
+            file.close()
+            return inShop
+        else:
+            self.__file_name = "Module_7_1.txt"
+            file = open(self.__file_name, 'w')
+            file.close()
+            self.get_products()
+
 
     # Метод add(self, *products), который принимает неограниченное количество объектов класса Product.
     # Добавляет в файл __file_name каждый продукт из products, если его ещё нет в файле (по названию).
@@ -49,5 +57,3 @@ p3 = Product('Potato', 5.5, 'Vegetables')
 print(p2) # __str__
 
 s1.add(p1, p2, p3)
-
-print(s1.get_products())
